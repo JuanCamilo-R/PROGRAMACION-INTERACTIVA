@@ -6,7 +6,10 @@ public class PrincipalJuegoMemoria {
 		
 		ControlJuegoMemoria control = new ControlJuegoMemoria();
 		
-		control.redefinirNumeroCara();
+		Cara cara = new Cara();
+		
+		cara.generarNumeros();
+		cara.mostrar();
 		
 
 	}
