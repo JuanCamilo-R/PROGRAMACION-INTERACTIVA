@@ -12,12 +12,11 @@ public class Cara {
 		numero = numeroRecibido;
 	}
 	
-	public void mostrar()
-	{
-		System.out.print(numero+"\n");
+	public int getNumero(){
+		return numero;
 	}
 	
-
+	
 	
 	
 
