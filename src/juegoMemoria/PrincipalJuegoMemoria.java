@@ -1,11 +1,12 @@
 package juegoMemoria;
 
+import java.awt.EventQueue;
 import java.util.ArrayList;
 
 public class PrincipalJuegoMemoria {
 	
 	public static void main(String[] args) {	
-		
+		/*
 		ControlJuegoMemoria control = new ControlJuegoMemoria();
 		ArrayList<Cara> carasDisponibles = new ArrayList<>();
 		
@@ -17,6 +18,18 @@ public class PrincipalJuegoMemoria {
 		//System.out.print(carasDisponibles.size()+"\n");
 		//System.out.print(carasDisponibles.get(0).getNumero()+"\n");
 		control.mostrarCarasDisponibles(carasDisponibles);
-	}
+		 */
+		
+		EventQueue.invokeLater(new Runnable() {
 
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				VistaGUIJuegoMemoria miVista =  new VistaGUIJuegoMemoria();
+			}
+			
+		});
+		
+	}
+	
 }

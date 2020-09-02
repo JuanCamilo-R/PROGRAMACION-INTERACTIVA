@@ -23,7 +23,7 @@ public class ControlJuegoMemoria {
 		int candidato;
 		while(numeros.size()<12) {
 			do {
-				candidato=aleatorio.nextInt(12)+1;
+				candidato=aleatorio.nextInt(12);
 				ocupado=numeros.contains(candidato);
 			}while(ocupado);
 			numeros.add(candidato);
@@ -96,6 +96,7 @@ public class ControlJuegoMemoria {
 			
 		}while(perdioOGano(numeroEscogidoUsuario));
 	}
+	
 	public int getCara(int indice) {
 		return caras[indice].getNumero();
 	}
