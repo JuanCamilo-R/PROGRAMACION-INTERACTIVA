@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -19,17 +20,17 @@ import javax.swing.JPanel;
 public class VistaGUIJuegoMemoria extends JFrame {
 	private ControlJuegoMemoria controlJuego;
 	private JPanel zonaJuego;
-	private JLabel mensaje, imagenLupa;
+	private JLabel mensaje, lupa;
 	private JButton[] caras;
 	private ImageIcon imagen;
 	private Escucha escucha;
-	private int cantidadAAgrandar;
+	private int cantidadAAgrandar = 305;
 	
 	public VistaGUIJuegoMemoria () {
 		initGUI();
 		
 		//set default window config
-		this.setSize(300,300);
+		this.setSize(300,cantidadAAgrandar);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setVisible(true);
@@ -48,18 +49,36 @@ public class VistaGUIJuegoMemoria extends JFrame {
 		caras = new JButton[12];
 		imagen = new ImageIcon();
 		mensaje = new JLabel("Observa bien las imagenes");
+		imagen = new ImageIcon("src/imagenes/lupa.jpeg");
+		lupa = new JLabel(imagen);
+		lupa.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)));
+		contenedor.add(lupa);
+		contenedor.add(mensaje);
 		//Creamos los botones.
 		for(int i = 0; i < 12; i++) {
 			caras[i] = new JButton();
 		}
-		agregarImagenes();
-		//Mostramos los botones
+		iniciarJuego();
+		//Mostramos los botones con imagenes.
 		for( int i = 0; i < 12; i++) {
 			contenedor.add(caras[i]);
 		}
+		
+	}
+	private void voltearImagenes() {
+		
 	}
 	
-	private void agregarImagenes() {
+	private void iniciarJuego() {
+		asignarImagenesBotones();
+		try {
+			TimeUnit.SECONDS.sleep(30);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
+		voltearImagenes();
+	}
+	private void asignarImagenesBotones() {
 		controlJuego.determinarCarasAEscoger();
 		controlJuego.generarNumeros();
 		controlJuego.asignarNumeroACaras();
