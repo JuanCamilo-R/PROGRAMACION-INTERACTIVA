@@ -3,6 +3,8 @@ package juegoMemoria;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class PrincipalJuegoMemoria {
 	
 	public static void main(String[] args) {	
@@ -12,13 +14,19 @@ public class PrincipalJuegoMemoria {
 		
 		control.generarNumeros();
 		control.asignarNumeroACaras();
-		int carasAEscoger = 12;
-		//System.out.print(carasAEscoger+"\n");
-		carasDisponibles = control.carasDisponiblesRonda(carasAEscoger);
-		//System.out.print(carasDisponibles.size()+"\n");
-		//System.out.print(carasDisponibles.get(0).getNumero()+"\n");
-		control.mostrarCarasDisponibles(carasDisponibles);
-		 */
+		int carasAEscoger = 4;
+		control.carasDisponiblesRonda(carasAEscoger);
+		control.escogerCaraAJugar();
+		control.mostrarCarasDisponibles();
+		System.out.print("Cara a jugar: "+control.retornarNumeroCaraJugar());
+		int usuarioEleccion = Integer.parseInt(JOptionPane.showInputDialog("Número a escoger: "));
+		
+		if(control.perdioOGano(usuarioEleccion)) {
+			System.out.print("Gano \n");
+		}else {
+			System.out.print("Perdió \n");
+		}
+		*/
 		
 		EventQueue.invokeLater(new Runnable() {
 

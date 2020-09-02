@@ -5,10 +5,11 @@ import java.util.Random;
 public class ControlJuegoMemoria {
 	//Atributos
 	private int ronda;
-	private int numeroEscogidoUsuario;
 	private ArrayList<Integer> numeros = new ArrayList<>();
 	private Cara[] caras;
 	private Random aleatorio;
+	private int indiceEscogido;
+	private ArrayList<Cara> carasDisponibles = new ArrayList<Cara>();
 	
 	//Methods
 	
@@ -35,44 +36,46 @@ public class ControlJuegoMemoria {
 			caras[i] = new Cara(numeros.get(i));
 		}
 	}
-	public void mostrarCarasDisponibles(ArrayList<Cara> carasDisponibles) {
+	public void mostrarCarasDisponibles() {
 		for(int i = 0; i < carasDisponibles.size(); i++) {
 			System.out.print(carasDisponibles.get(i).getNumero()+"\n");
 		}
 	}
 	//Define las caras disponibles en cada ronda.
-	public ArrayList<Cara> carasDisponiblesRonda(int cantidadCarasEscoger) {
-		ArrayList<Cara> carasDisponibles = new ArrayList<>();
+	public void carasDisponiblesRonda(int cantidadCarasEscoger) {
+		carasDisponibles.clear();
 		for (int i = 0; i < cantidadCarasEscoger; i++) {
 			carasDisponibles.add(caras[i]);
 		}
-		return carasDisponibles;
 	}
 	
 	//Escoge la cara que el jugador debe adivinar.
-	public int escogerCaraAJugar(ArrayList<Cara> carasDisponibles) {
-		int size = carasDisponibles.size();
-		return aleatorio.nextInt(size);
-	
+	public void escogerCaraAJugar() {
+		 int size = carasDisponibles.size();
+		 System.out.print("Tamano caras disponibles "+size+"\n");
+		 indiceEscogido = aleatorio.nextInt(size);
+	}
+	public int retornarNumeroCaraJugar() {
+		return indiceEscogido;
+	}
+	public int retornarElemento() {
+		return carasDisponibles.get(indiceEscogido).getNumero();
 	}
 	
-	public boolean perdioOGano(int numeroEscogido) {
-		numeroEscogidoUsuario = numeroEscogido;
-		int carasAEscoger = determinarCarasAEscoger();
-		ArrayList<Cara> carasDisponibles = new ArrayList<>();
-		carasDisponibles = carasDisponiblesRonda(carasAEscoger);
-		int numeroCara = escogerCaraAJugar(carasDisponibles);
-		if(numeroEscogidoUsuario == numeroCara) {
+	public boolean perdioOGano(int numeroEscogidoUsuario) {
+		int carasAEscoger = determinarCarasEscoger();
+		carasDisponiblesRonda(carasAEscoger);
+		if(numeroEscogidoUsuario == carasDisponibles.get(indiceEscogido).getNumero()) {
 			ronda++;
+			carasDisponiblesRonda(determinarCarasEscoger());
 			carasDisponibles.clear();
 			return true;
 		}
 		return false;
 	}
 	//Cuántas caras podemos escoger.
-	public int determinarCarasAEscoger() {
+	public int determinarCarasEscoger() {
 		int cantidadCarasEscoger = 0;
-		do {
 			switch(ronda) {
 				case 1:
 					cantidadCarasEscoger = 4;
@@ -92,11 +95,8 @@ public class ControlJuegoMemoria {
 				default:
 					cantidadCarasEscoger = 12;
 					return cantidadCarasEscoger;
-			}
-			
-		}while(perdioOGano(numeroEscogidoUsuario));
+			}	
 	}
-	
 	public int getCara(int indice) {
 		return caras[indice].getNumero();
 	}

@@ -13,24 +13,27 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 
 
 public class VistaGUIJuegoMemoria extends JFrame {
 	private ControlJuegoMemoria controlJuego;
 	private JPanel zonaJuego;
-	private JLabel mensaje, lupa;
+	private JLabel mensaje, imagenPrincipal;
 	private JButton[] caras;
 	private ImageIcon imagen;
 	private Escucha escucha;
-	private int cantidadAAgrandar = 305;
+	private int cantidadAgrandar = 305;
+	private int numeroEscogidoUsuario, numeroCaraJugar;
 	
 	public VistaGUIJuegoMemoria () {
 		initGUI();
 		
 		//set default window config
-		this.setSize(300,cantidadAAgrandar);
+		this.setSize(300,cantidadAgrandar);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setVisible(true);
@@ -50,9 +53,13 @@ public class VistaGUIJuegoMemoria extends JFrame {
 		imagen = new ImageIcon();
 		mensaje = new JLabel("Observa bien las imagenes");
 		imagen = new ImageIcon("src/imagenes/lupa.jpeg");
-		lupa = new JLabel(imagen);
-		lupa.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)));
-		contenedor.add(lupa);
+		imagenPrincipal = new JLabel(imagen);
+		imagenPrincipal.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)));
+		//Numero cara a jugar.
+		
+		//numeroCaraJugar = controlJuego.retornarNumeroCaraJugar();
+		
+		contenedor.add(imagenPrincipal);
 		contenedor.add(mensaje);
 		//Creamos los botones.
 		for(int i = 0; i < 12; i++) {
@@ -64,27 +71,47 @@ public class VistaGUIJuegoMemoria extends JFrame {
 			contenedor.add(caras[i]);
 		}
 		
-	}
-	private void voltearImagenes() {
+		
 		
 	}
+	private void voltearImagenes() {
+		for(int i = 0; i < 12; i++) {
+			imagen = new ImageIcon("src/numeros/"+i+".png");
+			caras[i].setPreferredSize(new Dimension(100,100));
+			caras[i].setIcon(new ImageIcon(imagen.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+		}
+	}
+	
+	//Timer, ejecuta la funcion voltearImagenes()
+	Timer timer = new Timer (5000, new ActionListener ()
+	{
+	    public void actionPerformed(ActionEvent e)
+	    {
+	    	controlJuego.escogerCaraAJugar();
+	    	System.out.print("\n"+controlJuego.retornarNumeroCaraJugar());
+	        voltearImagenes();
+			imagen = new ImageIcon("src/imagenes/"+
+	        controlJuego.retornarNumeroCaraJugar()+".png");
+			mensaje = new JLabel("¿Dónde estaba esa imagen?");
+			imagenPrincipal.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)));
+	     }
+	});
+	
 	
 	private void iniciarJuego() {
+		controlJuego.carasDisponiblesRonda(controlJuego.determinarCarasEscoger());
 		asignarImagenesBotones();
-		try {
-			TimeUnit.SECONDS.sleep(30);
-		} catch(InterruptedException e) {
-			e.printStackTrace();
-		}
-		voltearImagenes();
+		timer.start();
 	}
+	
 	private void asignarImagenesBotones() {
-		controlJuego.determinarCarasAEscoger();
+		controlJuego.determinarCarasEscoger();
 		controlJuego.generarNumeros();
 		controlJuego.asignarNumeroACaras();
 		for(int i = 0; i < 12; i++) {
 			imagen = new ImageIcon("src/imagenes/"+controlJuego.getCara(i)+".png");
 			caras[i].setPreferredSize(new Dimension(100,100));
+			caras[i].addActionListener(escucha);
 			caras[i].setIcon(new ImageIcon(imagen.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
 		}
 	}
@@ -93,7 +120,23 @@ public class VistaGUIJuegoMemoria extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent eventAction) {
-			// TODO Auto-generated method stub
+				
+			for (int i = 0; i < 12; i++) {
+				if(eventAction.getSource() == caras[i]) {
+					if(controlJuego.perdioOGano(controlJuego.getCara(i))) {
+						int input = JOptionPane.showConfirmDialog(null, "¿Quiere seguir jugando?");
+						if(input == 0) {
+							cantidadAgrandar+=100;
+							iniciarJuego();
+						}else {
+							System.exit(0);
+						}
+						
+					}else {
+						System.exit(0);
+					}
+				}
+			}
 			
 		}
 		
