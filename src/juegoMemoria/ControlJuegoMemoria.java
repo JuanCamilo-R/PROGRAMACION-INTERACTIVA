@@ -67,9 +67,9 @@ public class ControlJuegoMemoria {
 		carasDisponiblesRonda(carasAEscoger);
 		if(numeroEscogidoUsuario == carasDisponibles.get(indiceEscogido).getNumero()) {
 			ronda++;
-			System.out.println("Pasa a la ronda número "+ronda);
 			carasDisponiblesRonda(determinarCarasEscoger());
 			carasDisponibles.clear();
+			numeros.clear();
 			return true;
 		}
 		return false;

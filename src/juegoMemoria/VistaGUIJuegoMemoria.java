@@ -51,7 +51,7 @@ public class VistaGUIJuegoMemoria extends JFrame {
 		controlJuego = new ControlJuegoMemoria();
 		caras = new JButton[12];
 		//imagen = new ImageIcon();
-		mensaje = new JLabel("Observa bien las imagenes");
+		mensaje = new JLabel();
 		imagen = new ImageIcon("src/imagenes/lupa.jpeg");
 		imagenPrincipal = new JLabel(imagen);
 		imagenPrincipal.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)));
@@ -64,6 +64,7 @@ public class VistaGUIJuegoMemoria extends JFrame {
 		//Creamos los botones.
 		for(int i = 0; i < 12; i++) {
 			caras[i] = new JButton();
+			caras[i].addActionListener(escucha);
 		}
 		iniciarJuego();
 		//Mostramos los botones con imagenes.
@@ -88,10 +89,10 @@ public class VistaGUIJuegoMemoria extends JFrame {
 	    public void actionPerformed(ActionEvent e)
 	    {
 	    	controlJuego.escogerCaraAJugar();
-	    	System.out.print("\n"+controlJuego.retornarNumeroCaraJugar());
+	    	System.out.print("\nCara a jugar: "+controlJuego.retornarNumeroCaraJugar());
 	        voltearImagenes();
 			imagen = new ImageIcon("src/imagenes/"+controlJuego.getCara(controlJuego.retornarNumeroCaraJugar())+".png");
-			mensaje = new JLabel("¿Dónde estaba esa imagen?");
+			mensaje.setText("<html>¿Dónde estaba esa imagen?<br/>Mentira facho es la "+(controlJuego.retornarNumeroCaraJugar()+1)+"</html>");
 			imagenPrincipal.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)));
 			timer.stop();
 	     }
@@ -99,8 +100,12 @@ public class VistaGUIJuegoMemoria extends JFrame {
 	
 	
 	private void iniciarJuego() {
+		this.setLocationRelativeTo(null);
 		controlJuego.carasDisponiblesRonda(controlJuego.determinarCarasEscoger());
 		asignarImagenesBotones();
+		imagen = new ImageIcon("src/imagenes/lupa.jpeg");
+		mensaje.setText("Observa bien las imagenes");
+		imagenPrincipal.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)));
 		if(timer.isRunning()) {
 			timer.restart();
 		}
@@ -110,13 +115,12 @@ public class VistaGUIJuegoMemoria extends JFrame {
 	}
 	
 	private void asignarImagenesBotones() {
-		controlJuego.determinarCarasEscoger();
 		controlJuego.generarNumeros();
+		controlJuego.determinarCarasEscoger();
 		controlJuego.asignarNumeroACaras();
 		for(int i = 0; i < 12; i++) {
 			imagen = new ImageIcon("src/imagenes/"+controlJuego.getCara(i)+".png");
 			caras[i].setPreferredSize(new Dimension(100,100));
-			caras[i].addActionListener(escucha);
 			caras[i].setIcon(new ImageIcon(imagen.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
 		}
 	}
@@ -125,14 +129,19 @@ public class VistaGUIJuegoMemoria extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent eventAction) {
-				
 			for (int i = 0; i < 12; i++) {
 				if(eventAction.getSource() == caras[i]) {
 					if(controlJuego.perdioOGano(controlJuego.getCara(i))) {
-						int input = JOptionPane.showConfirmDialog(null, "¿Quiere seguir jugando? Bot�n:"+i);
+						int input = JOptionPane.showConfirmDialog(null, "¿Quiere seguir jugando?");
 						if(input == 0) {
-							setSize(300,cantidadAgrandar+=100);
+							if(cantidadAgrandar<=700){
+								setSize(300,cantidadAgrandar+=100);
+							}
+							else{
+								setSize(300,800);
+							}
 							iniciarJuego();
+							break;
 						}else {
 							System.exit(0);
 						}
