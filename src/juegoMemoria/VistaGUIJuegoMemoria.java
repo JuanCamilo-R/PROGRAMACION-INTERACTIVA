@@ -50,7 +50,7 @@ public class VistaGUIJuegoMemoria extends JFrame {
 		escucha = new Escucha();
 		controlJuego = new ControlJuegoMemoria();
 		caras = new JButton[12];
-		imagen = new ImageIcon();
+		//imagen = new ImageIcon();
 		mensaje = new JLabel("Observa bien las imagenes");
 		imagen = new ImageIcon("src/imagenes/lupa.jpeg");
 		imagenPrincipal = new JLabel(imagen);
@@ -90,9 +90,8 @@ public class VistaGUIJuegoMemoria extends JFrame {
 	    	controlJuego.escogerCaraAJugar();
 	    	System.out.print("\n"+controlJuego.retornarNumeroCaraJugar());
 	        voltearImagenes();
-			imagen = new ImageIcon("src/imagenes/"+
-	        controlJuego.retornarNumeroCaraJugar()+".png");
-			mensaje = new JLabel("¿Dónde estaba esa imagen?");
+			imagen = new ImageIcon("src/imagenes/"+controlJuego.getCara(controlJuego.retornarNumeroCaraJugar())+".png");
+			mensaje = new JLabel("Â¿DÃ³nde estaba esa imagen?");
 			imagenPrincipal.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)));
 	     }
 	});
@@ -124,9 +123,9 @@ public class VistaGUIJuegoMemoria extends JFrame {
 			for (int i = 0; i < 12; i++) {
 				if(eventAction.getSource() == caras[i]) {
 					if(controlJuego.perdioOGano(controlJuego.getCara(i))) {
-						int input = JOptionPane.showConfirmDialog(null, "¿Quiere seguir jugando?");
+						int input = JOptionPane.showConfirmDialog(null, "Â¿Quiere seguir jugando?");
 						if(input == 0) {
-							cantidadAgrandar+=100;
+							setSize(300,cantidadAgrandar+=100)
 							iniciarJuego();
 						}else {
 							System.exit(0);
