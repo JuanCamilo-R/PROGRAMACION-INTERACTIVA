@@ -85,14 +85,15 @@ public class VistaGUIJuegoMemoria extends JFrame {
 	
 	//Timer, ejecuta la funcion voltearImagenes()
 	Timer timer = new Timer (5000, new ActionListener ()
-	{
+	{  
 	    public void actionPerformed(ActionEvent e)
 	    {
+	    	
 	    	controlJuego.escogerCaraAJugar();
-	    	System.out.print("\nCara a jugar: "+controlJuego.retornarNumeroCaraJugar());
 	        voltearImagenes();
 			imagen = new ImageIcon("src/imagenes/"+controlJuego.getCara(controlJuego.retornarNumeroCaraJugar())+".png");
-			mensaje.setText("<html>Â¿DÃ³nde estaba esa imagen?<br/>Mentira facho es la "+(controlJuego.retornarNumeroCaraJugar()+1)+"</html>");
+			 System.out.print(numeroCaraJugar = controlJuego.retornarNumeroCaraJugar());
+			mensaje.setText("Â¿DÃ³nde estaba esa imagen?");
 			imagenPrincipal.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)));
 			timer.stop();
 	     }
@@ -125,36 +126,37 @@ public class VistaGUIJuegoMemoria extends JFrame {
 		}
 	}
 	
-	private class Escucha implements ActionListener {
+		private class Escucha implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent eventAction) {
-			for (int i = 0; i < 12; i++) {
-				if(eventAction.getSource() == caras[i]) {
-					if(controlJuego.perdioOGano(controlJuego.getCara(i))) {
-						String[] options= {"Sí","No"};
-						int input = JOptionPane.showOptionDialog(null, "¿Quiere seguir jugando?", "¿CONTIUAR?", 
-								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-						if(input == 0) {
-							if(cantidadAgrandar<=700){
-								setSize(300,cantidadAgrandar+=105);
+			if(!timer.isRunning()) {
+				for (int i = 0; i < 12; i++) {
+					if(eventAction.getSource() == caras[i]) {
+						if(controlJuego.perdioOGano(controlJuego.getCara(i))) {
+							String[] options= {"Sí","No"};
+							int input = JOptionPane.showOptionDialog(null, "¿Quiere seguir jugando?", "¿CONTIUAR?", 
+									JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+							if(input == 0) {
+								if(cantidadAgrandar<=700){
+									setSize(300,cantidadAgrandar+=105);
+								}
+								iniciarJuego();
+								break;
+							}else {
+								JOptionPane.showMessageDialog(null, "Has abandonado el juego");
+								System.exit(0);
 							}
-							iniciarJuego();
-							break;
 						}else {
-							JOptionPane.showMessageDialog(null, "Has abandonado el juego");
+							JOptionPane.showMessageDialog(null, "Has perdido");
 							System.exit(0);
 						}
-						
-					}else {
-						System.exit(0);
 					}
 				}
+
 			}
-			
-		}
 		
 
+		}
 	}
-
 }
