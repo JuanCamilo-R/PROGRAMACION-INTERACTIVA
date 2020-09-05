@@ -26,7 +26,7 @@ public class VistaGUIJuegoMemoria extends JFrame {
 	private JButton[] caras;
 	private ImageIcon imagen;
 	private Escucha escucha;
-	private int cantidadAgrandar = 305;
+	private int cantidadAgrandar = 299;
 	private int numeroEscogidoUsuario, numeroCaraJugar;
 	
 	public VistaGUIJuegoMemoria () {
@@ -132,17 +132,17 @@ public class VistaGUIJuegoMemoria extends JFrame {
 			for (int i = 0; i < 12; i++) {
 				if(eventAction.getSource() == caras[i]) {
 					if(controlJuego.perdioOGano(controlJuego.getCara(i))) {
-						int input = JOptionPane.showConfirmDialog(null, "Â¿Quiere seguir jugando?");
+						String[] options= {"Sí","No"};
+						int input = JOptionPane.showOptionDialog(null, "¿Quiere seguir jugando?", "¿CONTIUAR?", 
+								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 						if(input == 0) {
 							if(cantidadAgrandar<=700){
-								setSize(300,cantidadAgrandar+=100);
-							}
-							else{
-								setSize(300,800);
+								setSize(300,cantidadAgrandar+=105);
 							}
 							iniciarJuego();
 							break;
 						}else {
+							JOptionPane.showMessageDialog(null, "Has abandonado el juego");
 							System.exit(0);
 						}
 						
