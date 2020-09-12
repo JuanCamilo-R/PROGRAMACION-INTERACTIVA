@@ -43,7 +43,7 @@ public class VistaGUIJuegoMemoria extends JFrame {
 	/** The escucha. Para indicar que el objeto tiene un ActionListener*/
 	private Escucha escucha;
 	
-	/** The cantidad agrandar. En cada ronda la ventana se agranda ese tamaño */
+	/** The cantidad agrandar. En cada ronda la ventana se agranda ese tamaÃ±o */
 	private int cantidadAgrandar = 299;
 	
 	/** The numero cara jugar. Para indicar la cara que escogio el usuario  y el programa*/
@@ -60,6 +60,7 @@ public class VistaGUIJuegoMemoria extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setVisible(true);
+		this.setTitle("Juego memoria");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
@@ -179,7 +180,7 @@ public class VistaGUIJuegoMemoria extends JFrame {
 						if(controlJuego.perdioOGano(controlJuego.getCara(i))) {
 							//Si gana se le pregunta si quiere seguir jugando
 							String[] options= {"Si","No"};
-							int input = JOptionPane.showOptionDialog(null, "�Quiere seguir jugando?", "�CONTIUAR?", 
+							int input = JOptionPane.showOptionDialog(null, "¿Quiere seguir jugando?", "¿CONTIUAR?", 
 									JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 							//Si quiere seguir jugando agrandamos el JFrame e iniciamos el juego
 							if(input == 0) {
