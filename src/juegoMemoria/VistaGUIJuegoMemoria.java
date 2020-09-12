@@ -179,7 +179,7 @@ public class VistaGUIJuegoMemoria extends JFrame {
 						if(controlJuego.perdioOGano(controlJuego.getCara(i))) {
 							//Si gana se le pregunta si quiere seguir jugando
 							String[] options= {"Si","No"};
-							int input = JOptionPane.showOptionDialog(null, "Â¿Quiere seguir jugando?", "Â¿CONTIUAR?", 
+							int input = JOptionPane.showOptionDialog(null, "¿Quiere seguir jugando?", "¿CONTIUAR?", 
 									JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 							//Si quiere seguir jugando agrandamos el JFrame e iniciamos el juego
 							if(input == 0) {
