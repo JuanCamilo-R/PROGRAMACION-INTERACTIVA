@@ -46,7 +46,7 @@ public class ControlJuegoMemoria {
 	}
 	
 	/**
-	 * Generar numeros.  Genera números aleatorios únicos y se guarda n el array llamado numeros
+	 * Generar numeros.  Genera números aleatorios únicos y se guarda en el array llamado numeros
 	 */
 	public void generarNumeros(){
 		boolean ocupado;
