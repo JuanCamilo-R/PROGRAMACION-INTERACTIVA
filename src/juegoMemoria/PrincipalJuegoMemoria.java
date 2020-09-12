@@ -1,43 +1,35 @@
+/*
+ * Samuel Riascos 1922540
+ * Juan Camilo Randazzo 1923948
+ * Jennyfer Belalcazar 1925639
+ */
 package juegoMemoria;
 
 import java.awt.EventQueue;
-import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PrincipalJuegoMemoria. Clase para ejecutar el codigo.
+ */
 public class PrincipalJuegoMemoria {
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {	
-		/*
-		ControlJuegoMemoria control = new ControlJuegoMemoria();
-		ArrayList<Cara> carasDisponibles = new ArrayList<>();
-		
-		control.generarNumeros();
-		control.asignarNumeroACaras();
-		int carasAEscoger = 4;
-		control.carasDisponiblesRonda(carasAEscoger);
-		control.escogerCaraAJugar();
-		control.mostrarCarasDisponibles();
-		System.out.print("Cara a jugar: "+control.retornarNumeroCaraJugar());
-		int usuarioEleccion = Integer.parseInt(JOptionPane.showInputDialog("Número a escoger: "));
-		
-		if(control.perdioOGano(usuarioEleccion)) {
-			System.out.print("Gano \n");
-		}else {
-			System.out.print("Perdió \n");
-		}
-		*/
-		
+		//La clase Evenqueue es capaz de encolar eventos de forma asÃ­ncrona.
 		EventQueue.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
+				//Se crea un objeto de tipo vista para visualizar el juego
 				VistaGUIJuegoMemoria miVista =  new VistaGUIJuegoMemoria();
 			}
 			
 		});
 		
 	}
-	
 }
