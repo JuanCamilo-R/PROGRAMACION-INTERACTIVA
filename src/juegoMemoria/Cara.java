@@ -14,7 +14,7 @@ public class Cara {
 	
 	/** The numero. Numero que tendra la cara que representa el numero de la imagen que s visualizara en pantalla*/
 	//Atributos
-	int numero;
+	private int numero;
 	
 	/**
 	 * Constructor de la clase Cara, recibe un dato de tipo int el cual se decide en clase ControlJuego
